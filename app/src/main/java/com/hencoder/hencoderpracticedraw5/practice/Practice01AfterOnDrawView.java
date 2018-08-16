@@ -10,10 +10,10 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
 
-import com.hencoder.hencoderpracticedraw5.R;
-
 public class Practice01AfterOnDrawView extends AppCompatImageView {
-    Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private float[] vs = new float[9];
+    private Rect mRect = new Rect();
 
     public Practice01AfterOnDrawView(Context context) {
         super(context);
@@ -39,6 +39,17 @@ public class Practice01AfterOnDrawView extends AppCompatImageView {
         // 在 super.onDraw() 的下方插入绘制代码，让绘制内容盖住原主体内容
         // 由于这期的重点是绘制代码的位置而不是绘制代码本身，所以直接给出绘制代码，你只要解除注释就好
         // 爽吧？
+
+
+        Drawable drawable = getDrawable();
+        getImageMatrix().getValues(vs);
+        String sizeInfo = "尺寸:" + drawable.getIntrinsicWidth() + "*" + drawable.getIntrinsicHeight();
+
+        paint.getTextBounds(sizeInfo,0,sizeInfo.length(),mRect);
+
+        canvas.drawText(sizeInfo,
+                vs[2] + Math.abs(mRect.top),
+                vs[5] + Math.abs(mRect.top)+ 10, paint);
 
         /*Drawable drawable = getDrawable();
         if (drawable != null) {
